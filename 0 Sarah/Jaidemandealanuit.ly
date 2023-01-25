@@ -49,14 +49,18 @@ voixDeux = \fixed c' {
   \partial 8 r8 
   \repeat volta 3 {
     b2~ 4 a8 b c'2 a2~ 8 fis b a b4 e e' d' c'2 b
-    b c'2 a r4 fis\( g c' b2~ 4\) r b2\( ~ 4 a8 b c'2 b\) 
+    b c'2 a r4 
+    \shape #'((-.7 . 0.5) (-.7 . 0.5) (0 . -1) (0 . -1)) PhrasingSlur
+    fis\( g c' b2~ 4\) r 
+    \shape #'((0 . -1) (0 . 0) (0 . 0) (0 . -1)) PhrasingSlur
+    b2\( ~ 4 a8 b c'2 b\) 
     \shape #'(
                ((0 . -.5) (0 . -0.5) (0 . -0.5) (0 . -1))
-               ((0 . -2) (0 . -2) (1 . -2.5) (1.5 . -2))
+               ((-.5 . -2.5) (-.5 . -2.5) (.5 . -2.5) (.5 . -2.5))
                ) PhrasingSlur
-    a2~_\( 8 fis b a b4\) \tweak extra-offset #'(-3 . 0) \breathe 
-    e4\( e' d'\) c'2\( b c' a2~ \) 4 \tweak extra-offset #'(-6 . 0) \breathe 
-   \shape #'((0 . 0) (0 . 0) (22 . 0) (22 . 0)) PhrasingSlur
+    a2~_\( 8 fis b a b4\) \tweak extra-offset #'(-3 . 0) \tweak font-size #3 \breathe 
+    e4\( e' d'\) c'2\( b c' a2~ \) 4 \tweak extra-offset #'(-6 . 0) \tweak font-size #3 \breathe 
+   \shape #'((0 . 0) (0 . 0) (21 . 0) (21 . 0)) PhrasingSlur
     b4\( g fis\) 
   }
   \alternative {
@@ -103,7 +107,7 @@ voixDeux = \fixed c' {
     \line { À rejoindre par leurs cris les cris du ciel } 
     \line { J'ai dit aux forêts de rêver avec moi } 
     \line { D'oublier les lisières et les prairies} 
-    \line { Les foretes ont dit oui, m'ont livré leur poème} 
+    \line { Les forêts ont dit oui, m'ont livré leur poème} 
     \line { Sur leur peau de mousse et d'ombre j'ai dormi. }
     \vspace #2
   }
