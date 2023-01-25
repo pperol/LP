@@ -80,7 +80,12 @@ voixDeux = \fixed c' {
 
 \header {
   title = "J'ai dit à la nuit"
-  subtitle = "Extrait de la Comédie musicale : l'Iliade (1986)"
+  subtitle =  \markup\normal-text\concat { 
+    "Extrait de la Comédie musicale" 
+    \hspace #.3 ": "  
+    \italic "l'Iliade " 
+    "(1986)"
+  }
   poet = \markup \override #'(baseline-skip . 3 )\center-column {
     \italic "Paroles" "Anne Plassard"
   }
@@ -99,6 +104,11 @@ voixDeux = \fixed c' {
       \new Staff \voixDeux
     >>
   >>
+  \layout {
+    \revert Slur.after-line-breaking
+    \revert PhrasingSlur.after-line-breaking
+    \revert Tie.after-line-breaking
+  }
 }
 \markup\raise #5 \fill-line \fontsize #1 {
   \hspace #1
