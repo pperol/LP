@@ -1,4 +1,4 @@
-\version "2.23.10"
+\version "2.24.0"
 makeUnpurePureContainer =
         #(ly:make-unpure-pure-container
        ly:grob::stencil-height
@@ -1032,6 +1032,57 @@ midPartial =
      #music \bar "|"
      \cadenzaOff
    #})
+
+%%%% Variable Slurs and ties %%%%%%%%
+#(define (bezier-curve control-points t)
+"Given a Bezier curve of arbitrary degree specified by @var{control-points},
+compute the point at the specified position @var{t}."
+  (if (< 1 (length control-points))
+      (let ((q0 (bezier-curve (drop-right control-points 1) t))
+            (q1 (bezier-curve (drop control-points 1) t)))
+        (cons
+          (+ (* (car q0) (- 1 t)) (* (car q1) t))
+          (+ (* (cdr q0) (- 1 t)) (* (cdr q1) t))))
+      (car control-points)))
+
+#(define (bezier-approx-length control-points from to)
+"Given a Bezier curve of arbitrary degree specified by @var{control-points},
+compute its approximate arc length between the positions @var{from} and @var{to}."
+  (let* ((steps 10)
+         (params (iota steps from (/ (- to from) (1- steps))))
+         (points (map (lambda (x) (bezier-curve control-points x)) params))
+         (length 
+           (fold 
+             (lambda (a b prev) 
+               (+ prev (ly:length (- (car a) (car b)) (- (cdr a) (cdr b)))))
+             0 
+             (drop points 1) 
+             (drop-right points 1))))
+    ; Need to support negative length when the range is inverted.
+    (if (< from to) length (- length))))
+          
+#(define (variable-bow-thickness min-l max-l min-t max-t) 
+  (lambda (grob)
+      (let* ((cpf (ly:grob-property-data grob 'control-points))
+             (cpt (ly:grob-property grob 'control-points))
+             ;(cp0 (car cpt)) 
+             ;(cp3 (cadddr cpt))
+             ;(dx (- (car cp3) (car cp0)))
+             ;(dy (- (cdr cp3) (cdr cp0)))
+             ;(len (ly:length dx dy))
+             (len (bezier-approx-length cpt 0 1))
+             (thickness
+               (cond ((< len min-l) min-t)
+                     ((> len max-l) max-t)
+                     (else 
+                       (+ min-t 
+                         (* (- len min-l)
+                            (/ (- max-t min-t) 
+                               (- max-l min-l))))))))
+        (ly:grob-set-property! grob 'thickness thickness)
+        (ly:grob-set-property! grob 'control-points (ly:unpure-call cpf grob)))))
+
+
 %%%%%%%%%%%%%%%
 % Clefs G
 %%%%%%%%%%%%%%%
@@ -2104,9 +2155,9 @@ clefGBaeren = \layout {
            \override Parentheses.font-size = #0
            %\override Slur.thickness = #2.2
            %\override Tie.thickness = #2.2
-           \override PhrasingSlur.thickness = #(variable-bow-thickness 6 25 1 3)
-           \override Slur.thickness = #(variable-bow-thickness 6 25 1 3)
-           \override Tie.thickness = #(variable-bow-thickness 6 18 1 2)
+           \override PhrasingSlur.after-line-breaking = #(variable-bow-thickness 6 25 1 3)
+           \override Slur.after-line-breaking = #(variable-bow-thickness 6 25 1 3)
+           \override Tie.after-line-breaking = #(variable-bow-thickness 6 18 1 2)
            \override Tie.details.min-length = 4
            \override LaissezVibrerTie.thickness = #2.2
            \override RepeatTie.thickness = #2.2
@@ -2280,9 +2331,9 @@ clefPeters = \layout {
            \override Parentheses.font-size = #0
            %\override Slur.thickness = #2.2
            %\override Tie.thickness = #2.2
-           \override PhrasingSlur.thickness = #(variable-bow-thickness 6 25 1 3)
-           \override Slur.thickness = #(variable-bow-thickness 6 25 1 3)
-           \override Tie.thickness = #(variable-bow-thickness 6 18 1 2)
+           \override PhrasingSlur.after-line-breaking = #(variable-bow-thickness 6 25 1 3)
+           \override Slur.after-line-breaking = #(variable-bow-thickness 6 25 1 3)
+           \override Tie.after-line-breaking = #(variable-bow-thickness 6 18 1 2)
            \override Tie.details.min-length = 4
            \override LaissezVibrerTie.thickness = #2.2
            \override RepeatTie.thickness = #2.2
@@ -2424,16 +2475,16 @@ clefGHenle = \layout {
            \override Parentheses.font-size = #0
            %\override Slur.thickness = #2.2
            %\override Tie.thickness = #2.2
-           \override PhrasingSlur.thickness = #(variable-bow-thickness 6 25 1 3)
-           \override Slur.thickness = #(variable-bow-thickness 6 25 1 3)
-           \override Tie.thickness = #(variable-bow-thickness 6 18 1 2)
+           \override PhrasingSlur.after-line-breaking = #(variable-bow-thickness 6 25 1 3)
+           \override Slur.after-line-breaking = #(variable-bow-thickness 6 25 1 3)
+           \override Tie.after-line-breaking = #(variable-bow-thickness 6 18 1 2)
            \override Tie.details.min-length = 4
            \override LaissezVibrerTie.thickness = #2.2
            \override RepeatTie.thickness = #2.2
            \override StrokeFinger.font-size = #-2.5
            \override TupletNumber.font-name = #"LilyFont"
            \override TupletNumber.font-size = #-3
-           \override TupletNumber.Y-extent = \makeUnpurePureContainer
+           %\override TupletNumber.Y-extent = \makeUnpurePureContainer
            \override LaissezVibrerTie.stencil = #semi-tie-stencil
            \override RepeatTie.stencil = #semi-tie-stencil
          
@@ -2518,6 +2569,10 @@ equal-tab-staff-stems =
            0.32))))
   \override Beam.positions = #(cons val val)
 #})
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+
 #(define-public (format-time-sig-note grob)
    (let* ((frac (ly:grob-property grob 'fraction))
           (num (if (pair? frac) (car frac) 4))
@@ -2527,6 +2582,8 @@ equal-tab-staff-stems =
                      #:center-column (#:number (number->string num)
                                      (#:number (number->string den))))))
      (grob-interpret-markup grob m)))
+
+
 #(set! paper-alist (cons '("GuitarClassic" . (cons (* 205 mm) (* 290 mm))) paper-alist))
 %%% EllipSize :
 #(define-markup-command
@@ -4130,12 +4187,9 @@ bracketify = #(define-music-function (arg) (ly:music?)
       (markup->string m #:props (headers-property-alist-chain headers))
       (markup->string m)))
  markup-argument))))
-  
-
 
 
 %{
-convert-ly (GNU LilyPond) 2.23.10  convert-ly: Processing `'...
-Applying conversion: 2.21.0, 2.21.2, 2.23.1, 2.23.2, 2.23.3, 2.23.4,
-2.23.5, 2.23.6, 2.23.7, 2.23.8, 2.23.9, 2.23.10
+convert-ly (GNU LilyPond) 2.24.0  convert-ly: Processing `'...
+Applying conversion:     Le document n'a pas été modifié.
 %}
