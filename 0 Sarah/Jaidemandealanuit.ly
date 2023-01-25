@@ -39,11 +39,8 @@ paroles = \lyricmode {
   J'ai pri -- é la nuit __ de m'of -- frir des pa -- lais 
   D'a -- bri -- ter mon cœur frê __ "- le" dans leur cœur
   De ber -- cer mon ex -- il par des chan -- sons se -- crètes __ 
-  qui cap -- ti -- vent sen -- ti -- sen -- les et vo -- leurs 
-  J'ai " - leil"
-  
-  
-  
+  qui cap -- ti -- vent sen -- ti -- nel -- les et vo -- leurs 
+  J'ai " - leil."
 }
 
 voixDeux = \fixed c' {
@@ -80,12 +77,7 @@ voixDeux = \fixed c' {
 
 \header {
   title = "J'ai dit à la nuit"
-  subtitle =  \markup\normal-text\concat { 
-    "Extrait de la Comédie musicale" 
-    \hspace #.3 ": "  
-    \italic "l'Iliade " 
-    "(1986)"
-  }
+  subtitle =  \markup\normal-text { "Extrait de la Comédie musicale"  \italic "l'Iliade" "(1986)" }
   poet = \markup \override #'(baseline-skip . 3 )\center-column {
     \italic "Paroles" "Anne Plassard"
   }
@@ -113,24 +105,26 @@ voixDeux = \fixed c' {
 \markup\raise #5 \fill-line \fontsize #1 {
   \hspace #1
   \center-column {
-    2. \line { J'ai dit aux forêts de dormir avec moi }
-    \line { D'inviter les oiseaux des sources vives} 
+    \bold 2. 
+    \line { J'ai dit aux forêts de dormir avec moi }
+    \line { D'inviter les oiseaux des sources vives } 
     \line { À chanter les minuits sur la cîme des chênes } 
-    \line { À rejoindre par leurs cris les cris du ciel } 
+    \line { À rejoindre par leurs cris les cris du ciel. } 
     \line { J'ai dit aux forêts de rêver avec moi } 
-    \line { D'oublier les lisières et les prairies} 
-    \line { Les forêts ont dit oui, m'ont livré leur poème} 
+    \line { D'oublier les lisières et les prairies } 
+    \line { Les forêts ont dit oui, m'ont livré leur poème } 
     \line { Sur leur peau de mousse et d'ombre j'ai dormi. }
     \vspace #2
   }
   \hspace #7
   \center-column {
-    3. \line { J'ai dit à la mer de dormir avec moi }
+    \bold 3. 
+    \line { J'ai dit à la mer de dormir avec moi }
     \line { De partir avec moi chercher le rêve} 
     \line { D'abandonner les grèves, de déserter les îles} 
-    \line { De laisser son flot d'épaves aux naufrageurs} 
+    \line { De laisser son flot d'épaves aux naufrageurs.} 
     \line { J'ai dit à la mer de venir avec moi } 
-    \line { De noyer son mystère à l'horizon} 
+    \line { De noyer son mystère à l'horizon } 
     \line { Et la mer m'a dit oui en dessinant sur elle } 
     \line { Un sourire, deux lèvres bleues sans soleil. }
   }
