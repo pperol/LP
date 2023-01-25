@@ -80,7 +80,7 @@ voixDeux = \fixed c' {
 
 \header {
   title = "J'ai dit à la nuit"
-  subsubtitle = "Extrait de la Comédie musicale : l'Iliade (1986)"
+  subtitle = "Extrait de la Comédie musicale : l'Iliade (1986)"
   poet = \markup \override #'(baseline-skip . 3 )\center-column {
     \italic "Paroles" "Anne Plassard"
   }
