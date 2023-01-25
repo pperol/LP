@@ -1,4 +1,6 @@
 \version "2.24.0"
+\include "myTools23.ily"
+\clefGScore
 
 accords = \chordmode {
   \frenchChords
