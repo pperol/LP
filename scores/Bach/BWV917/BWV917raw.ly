@@ -182,7 +182,7 @@ voixUn = {
   | % mes.21
     r2 fis'
   | % mes.22
-    s1
+    r8 g' d' f! ees!2
   | % mes.23
     s1
   | % mes.24
