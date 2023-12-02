@@ -172,15 +172,15 @@ voixUn = {
   | % mes.16
     g'2 fis'
   | % mes.17
-    s1
+    g'2 r8 f'! g' a'
   | % mes.18
-    s1
+    bes'8 a' g' f' e' f' g' e'
   | % mes.19
-    s1
+    r4 d'8 e' fis'4 d'
   | % mes.20
-    s1
+    g'4 d' g'2
   | % mes.21
-    s1
+    r2 fis'
   | % mes.22
     s1
   | % mes.23
