@@ -182,15 +182,15 @@ voixUn = {
   | % mes.21
     r2 fis'
   | % mes.22
-    r8 g' d' f! ees!2
+    r8 g' d' f'! ees'!2~ 
   | % mes.23
-    s1
+    ees'8 f' c' ees' d'2~ 
   | % mes.24
-    s1
+    d'8 ees' b d' c'2~ 
   | % mes.25
-    s1
+    c'8 d' a! c' b c' a b
   | % mes.26
-    s1
+    c'2 2
   | % mes.27
     s1
   | % mes.28
