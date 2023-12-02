@@ -164,13 +164,13 @@ voixUn = {
   | % mes.12
     2 cis'
   | % mes.13
-    s1
+    <f d'>4 r bes2~ 
   | % mes.14
-    s1
+    bes a~ 
   | % mes.15
-    s1
+    a4 g'8( fis') g'2~ 
   | % mes.16
-    s1
+    g'2 fis'
   | % mes.17
     s1
   | % mes.18
